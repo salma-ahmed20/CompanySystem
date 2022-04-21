@@ -12,6 +12,7 @@ angular.module('appModule')
         templateUrl: './pages/home-page/home-page.html',
         controller: 'homeController',
         controllerAs: 'homePageVm',
+        reloadOnSearch: false,
       })
       .state({
         name: 'team-performance',

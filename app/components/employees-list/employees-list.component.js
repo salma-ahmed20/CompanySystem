@@ -6,7 +6,16 @@ angular
     controllerAs: 'EmployeesListComponentVm',
     bindings: {
       employeesList: '<',
+      keyword: '<',
+
     },
   });
 
-function EmployeesListComponent() {}
+function EmployeesListComponent($location) {
+  const employeesPageVm = this;
+  employeesPageVm.$onChanges = function (changeObj) {
+    if (changeObj.keyword) {
+      $location.search('filter', changeObj.keyword.currentValue);
+    }
+  };
+}

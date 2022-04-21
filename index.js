@@ -3,6 +3,8 @@ import '@uirouter/angularjs';
 
 import './app/styles/main.scss';
 import './app/app.module.js';
+import './app/core/core.module.js';
+import './app/core/checkmark/checkmark.filter.js';
 import './app/services/employees.service';
 import './app/components/employees-list/employees-list.component';
 

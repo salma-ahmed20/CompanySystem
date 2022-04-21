@@ -1,9 +1,14 @@
 <div class="c-dashboard">
   <div class="c-filters__container">
-    [Place search component here]
+    Search: <input ng-model="homePageVm.keyword" />
+  <filter-employees-component
+  vprops-first-name="homePageVm.person.firstName"
+  vprops-last-name="homePageVm.person.lastName"/>
+
+
   </div>
 
-  <employees-list employees-list="homePageVm.employees"></employees-list>
+  <employees-list employees-list="homePageVm.employees" keyword="homePageVm.keyword"></employees-list>
 
   <div class="c-dashboard__footer">
     <button class="c-button">

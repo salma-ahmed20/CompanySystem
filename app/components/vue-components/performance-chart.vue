@@ -17,7 +17,6 @@ import {
 } from "echarts/components";
 import VChart from "vue-echarts";
 import store from '../../store/index'
-import formatDate from '../../utils/formatDate'
 
 use([
   CanvasRenderer,
@@ -110,7 +109,7 @@ export default {
     },
 
     xAxisData() {
-      return this.chartData && this.chartData.map((item) => formatDate(item.date_ms));
+      return this.chartData && this.chartData.map((item) => this.formatDate(item.date_ms));
     },
 
     yAxisData() {
@@ -119,9 +118,9 @@ export default {
   },
 
   methods: {
-    // formatDate(dateInMs) {
-    //   return moment(dateInMs).format("DD MMM YYYY");
-    // },
+    formatDate(dateInMs) {
+      return moment(dateInMs).format("DD MMM YYYY");
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="c-chart__container">
+  <div class="c-chart__container" id="performance-chart">
     <v-chart ref="chart" :option="chartOptions" />
   </div>
 </template>
@@ -16,6 +16,8 @@ import {
   VisualMapComponent,
 } from "echarts/components";
 import VChart from "vue-echarts";
+import store from '../../store/index'
+import formatDate from '../../utils/formatDate'
 
 use([
   CanvasRenderer,
@@ -28,47 +30,24 @@ use([
 
 export default {
   name: "PerformanceChartComponent",
-
+  props:['filterData'],
   components: {
     VChart,
   },
-
-  data() {
-    return {
-      chartData: [
-        {
-          date_ms: 1641772800000,
-          performance: 0.2,
-        },
-        {
-          date_ms: 1641859200000,
-          performance: 0.33,
-        },
-        {
-          date_ms: 1641945600000,
-          performance: 0.53,
-        },
-        {
-          date_ms: 1642032000000,
-          performance: 0.31,
-        },
-        {
-          date_ms: 1642118400000,
-          performance: 0.65,
-        },
-        {
-          date_ms: 1642204800000,
-          performance: 0.88,
-        },
-        {
-          date_ms: 1642291200000,
-          performance: 0.07,
-        },
-      ],
-    };
+  
+  created (){
+    store.dispatch('getChartData')
   },
 
   computed: {
+    chartData() {
+      if(this.filterData.startDate){
+         return store.getters.getFilteredData(this.filterData)
+      }else{ 
+        return store.getters.getData 
+      }
+    },
+    
     initOptions() {
       return {
         width: "auto",
@@ -131,18 +110,18 @@ export default {
     },
 
     xAxisData() {
-      return this.chartData.map((item) => this.formatDate(item.date_ms));
+      return this.chartData && this.chartData.map((item) => formatDate(item.date_ms));
     },
 
     yAxisData() {
-      return this.chartData.map((item) => +item.performance * 100);
+      return this.chartData && this.chartData.map((item) => +item.performance * 100);
     },
   },
 
   methods: {
-    formatDate(dateInMs) {
-      return moment(dateInMs).format("DD MMM YYYY");
-    },
+    // formatDate(dateInMs) {
+    //   return moment(dateInMs).format("DD MMM YYYY");
+    // },
   },
 };
 </script>

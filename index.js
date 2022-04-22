@@ -10,3 +10,4 @@ import './app/components/employees-list/employees-list.component';
 
 import './app/pages/home-page/home-page.controller';
 import './app/app.routes.js';
+// import './app/store/index.js';

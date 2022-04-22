@@ -16,9 +16,8 @@ import {
   VisualMapComponent,
 } from "echarts/components";
 import VChart from "vue-echarts";
-import store from '../../store/index'
-import formatDate from '../../utils/formatDate'
-
+import store from "../../store/index";
+import axios from 'axios'
 use([
   CanvasRenderer,
   LineChart,
@@ -28,26 +27,27 @@ use([
   VisualMapComponent,
 ]);
 
+
 export default {
   name: "PerformanceChartComponent",
-  props:['filterData'],
+  props: ["filterData"],
   components: {
     VChart,
   },
-  
-  created (){
-    store.dispatch('getChartData')
+
+  created() {
+    store.dispatch("getChartData");
   },
 
   computed: {
     chartData() {
-      if(this.filterData.startDate){
-         return store.getters.getFilteredData(this.filterData)
-      }else{ 
-        return store.getters.getData 
+      if (this.filterData.startDate) {
+        return store.getters.getFilteredData(this.filterData);
+      } else {
+        return store.getters.getData;
       }
     },
-    
+
     initOptions() {
       return {
         width: "auto",
@@ -62,11 +62,17 @@ export default {
           left: "center",
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           transitionDuration: 0,
           confine: false,
           hideDelay: 0,
-          padding: 0,
+          //padding: 0,
+          backgroundColor:'#16253f',
+          padding: 16,        
+          textStyle:{
+            color:'#fff',
+            width:100
+          }
         },
         grid: {
           left: "30px",
@@ -94,8 +100,33 @@ export default {
           axisTick: { show: true },
           splitLine: { show: true },
         },
+        visualMap: {
+          top: 50,
+          right: 10,
+          pieces: [
+            {
+              gt: 0,
+              lte: 50,
+              color: "#f4674c",
+            },
+            {
+              gt: 50,
+              lte: 80,
+              color: "#fbdb10",
+            },
+            {
+              gt: 80,
+              lte: 100,
+              color: "#01984f",
+            },
+          ],
+          outOfRange: {
+            color: "#999",
+          },
+        },
         series: [
           {
+            name: "Team Performance Index :",
             data: this.yAxisData,
             type: "line",
             symbol: "circle",
@@ -104,24 +135,32 @@ export default {
             lineStyle: {
               width: 2,
             },
+            tooltip:{
+            }
+           
           },
         ],
       };
     },
 
     xAxisData() {
-      return this.chartData && this.chartData.map((item) => formatDate(item.date_ms));
+      return (
+        this.chartData &&
+        this.chartData.map((item) => this.formatDate(item.date_ms))
+      );
     },
 
     yAxisData() {
-      return this.chartData && this.chartData.map((item) => +item.performance * 100);
+      return (
+        this.chartData && this.chartData.map((item) => +item.performance * 100)
+      );
     },
   },
 
   methods: {
-    // formatDate(dateInMs) {
-    //   return moment(dateInMs).format("DD MMM YYYY");
-    // },
+    formatDate(dateInMs) {
+      return moment(dateInMs).format("DD MMM YYYY");
+    },
   },
 };
 </script>

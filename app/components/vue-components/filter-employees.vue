@@ -1,6 +1,5 @@
 <template>
   <div >
-    {{firstName}}
   </div>
 </template>
 
@@ -8,9 +7,5 @@
 
 export default {
   name: "FilterEmployeesComponent",
-props: {
-    firstName: String,
-    lastName: String
-  }
 };
 </script>

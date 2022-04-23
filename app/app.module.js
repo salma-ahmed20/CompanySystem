@@ -6,6 +6,7 @@ import PerformancePageComponent from './pages/performance-page.vue';
 import PerformanceChartComponent from './components/vue-components/performance-chart.vue';
 import FilterChartComponent from './components/vue-components/filter-chart.vue';
 import FilterEmployeesComponent from './components/vue-components/filter-employees.vue';
+import NotFoundPageComponent from './pages/not-found-page.vue';
 
 angular.module('appModule', [
   'ui.router',
@@ -28,4 +29,8 @@ angular.module('appModule').directive('vFilterChart', (createVueComponent) => {
 
 angular.module('appModule').directive('vFilterEmployees', (createVueComponent) => {
   return createVueComponent(Vue.component('filterEmployeesComponent', FilterEmployeesComponent));
+});
+
+angular.module('appModule').directive('vNotFoundPage', (createVueComponent) => {
+  return createVueComponent(Vue.component('notFoundPageComponent', NotFoundPageComponent));
 });

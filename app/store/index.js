@@ -27,9 +27,9 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    getChartData(context) {
+    getChartData({ commit }) {
       axios.get('https://fe-task.getsandbox.com/performance').then(response=>{
-        context.commit('setChartData', response.data);
+        commit('setChartData', response.data);
       });
     },
   },

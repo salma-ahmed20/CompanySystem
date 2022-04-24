@@ -13,9 +13,11 @@ angular
 
 function EmployeesListComponent($location) {
   const employeesPageVm = this;
-  employeesPageVm.$onChanges = function (changeObj) {
-    if (changeObj.keyword) {
-      $location.search('filter', changeObj.keyword.currentValue);
+  employeesPageVm.$onChanges = function () {
+    if (employeesPageVm.keyword) {
+      $location.search('filter', employeesPageVm.keyword);
+    } else {
+      $location.search({});
     }
   };
 }
